@@ -1,0 +1,73 @@
+@use "../../../../../../src/cores.scss" as *;
+
+h5{
+  color: $oab-light;
+  font-weight: 800;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+
+  .has-event {
+    background-color: #e1f7ff; // Destaca dias com eventos
+  }
+
+  .weekday {
+    background-color: $oab-light;
+    color: white;
+  }
+
+  ul {
+    padding: 0;
+    list-style-type: none;
+  }
+}
+
+.modal-footer {
+  display: flex;
+  button {
+    width: 100%;
+  }
+}
+
+.modalCalendario {
+  background-color: #000000a2;
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.1s ease-in-out;
+}
+
+.modal-content {
+  position: absolute;
+  top: 10%;
+  left: 40%;
+  background-color: white;
+  opacity: 0;
+  height: 0;
+  transition: opacity 0.5s ease-in-out, height 0.5s ease-in-out;
+}
+
+.modal-content.show {
+  opacity: 1;
+  height: auto;
+  width: 400px;
+  border-radius: 10px;
+}
+
+.modalCalendario.show {
+  opacity: 1;
+  width: 100%;
+  height: 100%;
+}

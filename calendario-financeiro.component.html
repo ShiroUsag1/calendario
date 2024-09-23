@@ -1,0 +1,122 @@
+<div>
+  <div class="calendar">
+    <div class="calendar-header d-flex justify-content-between">
+      <h3>Eventos Financeiros</h3>
+      <button
+        class="btn btn-outline-info btn-sm mb-2"
+        (click)="abriFormModal()"
+        type="button"
+      >
+        <i class="bi bi-plus-lg"></i>
+      </button>
+    </div>
+    <!-- Tabela do calendário -->
+    <table class="calendar-table">
+      <thead>
+        <tr>
+          <th class="weekday" *ngFor="let day of weekDays">{{ day }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let week of weeks">
+          <td
+            *ngFor="let day of week"
+            [ngClass]="hasEvent(day) ? 'has-event' : ''"
+          >
+            <span (click)="mostrarEventos(day)" *ngIf="day">{{
+              day.getDate()
+            }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- Footer com navegação -->
+    <div class="calendar-footer text-center">
+      <button class="btn" (click)="previousMonth()">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+      <span>{{ getCurrentMonthName() }} {{ currentYear }}</span>
+      <button class="btn" (click)="nextMonth()">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+
+    <div class="modalCalendario" (transitionend)="iniciarSegundaTransicao()">
+      <div class="modal-content">
+        <div
+          class="modal-header p-3 pb-2 border-bottom border-secondary-subtle"
+        >
+          <h5>
+            {{ newEvent ? "Novo Evento" : "Eventos para este dia" }}
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            (click)="fecharModal()"
+          ></button>
+        </div>
+        <div class="modal-body p-3">
+          <ul *ngIf="selectedDayEvents.length > 0 && !newEvent">
+            <li class="list-group" *ngFor="let event of selectedDayEvents">
+              <div class="form-check fs-6">
+                <input class="form-check-input" type="checkbox" />
+                <label class="form-check-label">
+                  {{ event.titulo }}
+                </label>
+              </div>
+            </li>
+          </ul>
+          <form *ngIf="newEvent">
+            <div class="form-group">
+              <label for="titulo">Título do Evento:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="titulo"
+                [(ngModel)]="novoEvento.titulo"
+                name="titulo"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="data">Data do Evento:</label>
+              <input
+                type="date"
+                class="form-control"
+                id="data"
+                [(ngModel)]="novoEvento.data"
+                name="data"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="tipo">Tipo de Evento:</label>
+              <select
+                class="form-control"
+                id="tipo"
+                [(ngModel)]="novoEvento.tipo"
+                name="tipo"
+                required
+              >
+                <option value="Pagamento">Pagamento</option>
+                <option value="Vencimento">Vencimento</option>
+                <option value="Recebimento">Recebimento</option>
+                <option value="Investimento">Investimento</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer border-top border-secondary-subtle p-3">
+          <button *ngIf="newEvent" type="button" class="btn btn-primary mt-2">
+            <i class="bi bi-plus-lg"></i> Adicionar
+          </button>
+          <button *ngIf="!newEvent" class="btn btn-primary">
+            <i class="bi bi-trash"></i> Deletar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
